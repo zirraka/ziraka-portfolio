@@ -37,10 +37,7 @@ const EXPERIENCE_DATA = [
 
 const Experience = () => {
   return (
-    <section
-      id="experience"
-      className="min-h-screen flex items-center py-20 px-6 bg-gray-50 dark:bg-gray-900"
-    >
+    <section id="experience" className="py-16 px-6 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-4xl">
         <FadeInSection>
           <h2 className="text-3xl font-bold mb-12 text-center text-gray-800 dark:text-white">
@@ -48,16 +45,20 @@ const Experience = () => {
           </h2>
         </FadeInSection>
         <div className="relative">
-          <div className="absolute left-8 md:left-1/2 top-0 w-0.5 h-full bg-blue-200 dark:bg-blue-900 transform -translate-x-0.5 hidden md:block"></div>
+          <div className="hidden md:block absolute left-1/2 top-0 h-full w-0.5 bg-blue-200 dark:bg-blue-900 -translate-x-1/2"></div>
           {EXPERIENCE_DATA.map((exp, i) => (
-            <FadeInSection key={i} delay={i * 0.1}>
+            <FadeInSection key={exp.id} delay={i * 0.1}>
               <div
-                className={`flex flex-col md:flex-row ${i % 2 === 0 ? "md:flex-row-reverse" : ""} mb-8`}
+                className={`relative flex flex-col md:flex-row ${
+                  i % 2 === 0 ? "md:flex-row-reverse" : ""
+                } mb-10`}
               >
                 <div
-                  className={`w-full md:w-1/2 ${i % 2 === 0 ? "md:pr-8 md:pl-16" : "md:pl-8 md:pr-16"}`}
+                  className={`w-full md:w-1/2 ${
+                    i % 2 === 0 ? "md:pl-8 md:pr-16" : "md:pr-8 md:pl-16"
+                  }`}
                 >
-                  <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-600">
+                  <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition border border-gray-200 dark:border-gray-600">
                     <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
                       {exp.role}
                     </h3>
@@ -72,8 +73,8 @@ const Experience = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center justify-center">
-                  <div className="w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-gray-800 shadow-md z-10"></div>
+                <div className="hidden md:block absolute left-1/2 top-8 -translate-x-1/2">
+                  <div className="w-5 h-5 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900 shadow-md"></div>
                 </div>
               </div>
             </FadeInSection>

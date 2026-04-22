@@ -50,13 +50,13 @@ const Hero = () => {
 
       return () => clearTimeout(timer);
     }
-  }, [text, isDeleting, phraseIndex, speed, heroPhrases]);
+  }, [text, isDeleting, phraseIndex, speed]);
 
   return (
     <section
       id="hero"
       className="min-h-screen flex items-center justify-center px-6 py-20
-      bg-gradient-to-br  bg-gray-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-700"
+      bg-gradient-to-br bg-gray-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-700"
     >
       <div className="container mx-auto max-w-screen-xl">
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12">
@@ -65,43 +65,46 @@ const Hero = () => {
             width="250"
             height="250"
             className="w-64 h-64 rounded-full object-cover
-             text-black dark:text-white
              shadow-lg dark:shadow-xl
-             border-4 border-white dark:border-gray-800
-             duration-500 ease-in-out"
+             border-4 border-white dark:border-gray-800"
+            alt="avatar"
           />
-
-          <div className="text-center lg:text-left max-w-2xl">
+          <div className="w-full text-center lg:text-left max-w-2xl">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-800 dark:text-white mb-2 leading-tight">
               Giorgi Zirakashvili
             </h1>
+
             <p className="text-2xl md:text-3xl text-blue-600 dark:text-blue-400 font-medium mb-4">
               Senior React Native Developer
             </p>
-
             <p
-              className="text-lg md:text-xl font-mono text-gray-700 dark:text-gray-300 mb-8 tracking-wide"
+              className="text-lg md:text-xl font-mono text-gray-700 dark:text-gray-300 mb-8 tracking-wide
+              min-h-[2.5rem] max-w-xl mx-auto lg:mx-0 break-words"
               style={{
                 fontFamily:
                   'Monaco, Menlo, "Ubuntu Mono", "Fira Code", monospace',
               }}
             >
               {text}
-              <span className="inline-block w-px h-8 bg-blue-600 dark:bg-blue-400 animate-pulse ml-1"></span>
+              <span className="inline-block w-px h-6 bg-blue-600 dark:bg-blue-400 animate-pulse ml-1" />
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+            <div className="w-full flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <a
-                href="../public/resume.pdf"
+                href="/resume.pdf"
                 download="Giorgi-Zirakashvili-Resume.pdf"
-                className="px-6 py-3
-                        bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white
-                        rounded-lg shadow-md hover:shadow-lg transition-all duration-300 font-medium"
+                className="w-full sm:w-auto sm:min-w-[180px] h-12 flex items-center justify-center px-6
+                bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white
+                rounded-lg shadow-md hover:shadow-lg transition-all duration-300 font-medium"
               >
                 📄 Download CV
               </a>
               <a
                 href="#contact"
-                className="px-6 py-3 bg-transparent border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 font-medium"
+                className="w-full sm:w-auto sm:min-w-[180px] h-12 flex items-center justify-center px-6
+                bg-transparent border-2 border-blue-600 dark:border-blue-400
+                text-blue-600 dark:text-blue-400
+                hover:bg-blue-600 hover:text-white dark:hover:bg-blue-800
+                rounded-lg shadow-md hover:shadow-lg transition-all duration-300 font-medium"
               >
                 ✉️ Contact me
               </a>
@@ -111,7 +114,6 @@ const Hero = () => {
                 href="https://github.com/zirraka"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub"
                 className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-transform hover:scale-110"
               >
                 <FaGithub />
@@ -120,14 +122,12 @@ const Hero = () => {
                 href="https://www.linkedin.com/in/giorgizirakashvili/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn"
                 className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-transform hover:scale-110"
               >
                 <FaLinkedin />
               </a>
               <a
-                href={`mailto:giorgizirakashvili81@gmail.com`}
-                aria-label="Email"
+                href="mailto:giorgizirakashvili81@gmail.com"
                 className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-transform hover:scale-110"
               >
                 <FaEnvelope />
