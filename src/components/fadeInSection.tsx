@@ -1,7 +1,12 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 
-const FadeInSection = ({ children, delay = 0 }) => {
+type Props = {
+  children: ReactNode;
+  delay?: number;
+};
+
+const FadeInSection = ({ children, delay = 0 }: Props) => {
   const ref = useRef(null);
   const isInView = useInView(ref, {
     once: true,
