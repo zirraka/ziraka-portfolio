@@ -1,5 +1,6 @@
 import Navbar from "./components/navBar";
 import About from "./sections/about";
+import Apps from "./sections/apps";
 import Education from "./sections/education";
 import Experience from "./sections/experience";
 import Footer from "./sections/footer";
@@ -17,6 +18,7 @@ export default function App() {
       <Projects />
       <Experience />
       <Education />
+      <Apps />
       <Footer />
     </>
   );

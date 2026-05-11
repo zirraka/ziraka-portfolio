@@ -8,6 +8,7 @@ const config = [
   { id: "projects", href: "#projects", name: "Projects" },
   { id: "experience", href: "#experience", name: "Experience" },
   { id: "education", href: "#education", name: "Education" },
+  { id: "apps", href: "#apps", name: "Apps" },
 ];
 
 const Navbar = () => {
