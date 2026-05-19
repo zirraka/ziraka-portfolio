@@ -18,7 +18,7 @@ export default function App() {
       <Projects />
       <Experience />
       <Education />
-      <Apps />
+      {/* <Apps /> */}
       <Footer />
     </>
   );
