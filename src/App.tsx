@@ -1,6 +1,6 @@
 import Navbar from "./components/navBar";
 import About from "./sections/about";
-import Apps from "./sections/apps";
+// import Apps from "./sections/apps";
 import Education from "./sections/education";
 import Experience from "./sections/experience";
 import Footer from "./sections/footer";
