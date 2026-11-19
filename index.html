@@ -1,13 +1,136 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Giorgi Zirakashvili</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#05060b" />
+    <meta
+      name="description"
+      content="Senior React Native developer for hire. B2B contractor based in Tbilisi, Georgia, working remotely across any timezone. Fintech and crypto mobile apps for iOS and Android."
+    />
+    <title>Giorgi Zirakashvili — Senior React Native Developer, Remote Contractor</title>
+    <link rel="canonical" href="https://zirraka.com/" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" as="image" href="/avatar.jpeg" fetchpriority="high" />
+    <meta name="author" content="Giorgi Zirakashvili" />
+    <meta name="geo.placename" content="Tbilisi, Georgia" />
+    <meta name="geo.region" content="GE-TB" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- Link previews (LinkedIn, iMessage, Slack, WhatsApp, X…) — image URLs must be absolute -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://zirraka.com/" />
+    <meta property="og:site_name" content="Giorgi Zirakashvili" />
+    <meta property="og:title" content="Giorgi Zirakashvili — Senior React Native Developer, Remote Contractor" />
+    <meta
+      property="og:description"
+      content="Senior React Native developer for hire. B2B contractor based in Tbilisi, Georgia, working remotely across any timezone. Fintech and crypto mobile apps for iOS and Android."
+    />
+    <meta property="og:image" content="https://zirraka.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Giorgi Zirakashvili — Senior React Native Developer" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Giorgi Zirakashvili — Senior React Native Developer, Remote Contractor" />
+    <meta
+      name="twitter:description"
+      content="Senior React Native developer for hire. B2B contractor based in Tbilisi, Georgia, working remotely across any timezone. Fintech and crypto mobile apps for iOS and Android."
+    />
+    <meta name="twitter:image" content="https://zirraka.com/og-image.png" />
+
+    <!-- Tells Google who this site is about -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://zirraka.com/#website",
+            "url": "https://zirraka.com/",
+            "name": "Giorgi Zirakashvili",
+            "inLanguage": "en",
+            "description": "Portfolio of Giorgi Zirakashvili, remote Senior React Native developer and B2B contractor."
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://zirraka.com/#profile",
+            "url": "https://zirraka.com/",
+            "name": "Giorgi Zirakashvili — Senior React Native Developer",
+            "isPartOf": { "@id": "https://zirraka.com/#website" },
+            "mainEntity": { "@id": "https://zirraka.com/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://zirraka.com/#person",
+            "name": "Giorgi Zirakashvili",
+            "url": "https://zirraka.com/",
+            "image": "https://zirraka.com/avatar.jpeg",
+            "email": "mailto:giorgizirakashvili81@gmail.com",
+            "jobTitle": "Senior React Native Developer",
+            "description": "Senior React Native developer and B2B contractor based in Tbilisi, Georgia, working remotely with teams in any timezone. Specializes in high-performance fintech and crypto mobile apps for iOS and Android.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Tbilisi",
+              "addressCountry": "GE"
+            },
+            "homeLocation": { "@type": "Place", "name": "Tbilisi, Georgia" },
+            "makesOffer": {
+              "@type": "Offer",
+              "availability": "https://schema.org/InStock",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "React Native development (B2B contract)",
+                "serviceType": "Mobile app development",
+                "description": "Remote senior React Native development for iOS and Android: architecture, fintech and crypto features, performance, upgrades and CI/CD.",
+                "areaServed": "Worldwide"
+              }
+            },
+            "worksFor": { "@type": "Organization", "name": "Coinmetro" },
+            "alumniOf": [
+              { "@type": "CollegeOrUniversity", "name": "San Diego State University" },
+              { "@type": "CollegeOrUniversity", "name": "Tbilisi State University" }
+            ],
+            "knowsAbout": [
+              "React Native",
+              "TypeScript",
+              "iOS development",
+              "Android development",
+              "Mobile app architecture",
+              "Fintech",
+              "Crypto wallets",
+              "Web3",
+              "Ethereum",
+              "Apple Pay and Google Pay integration",
+              "Mobile CI/CD",
+              "Fastlane"
+            ],
+            "sameAs": [
+              "https://github.com/zirraka",
+              "https://www.linkedin.com/in/giorgizirakashvili/"
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- Apply the saved theme before first paint so there is no flash -->
+    <script>
+      try {
+        var saved = localStorage.getItem("darkMode");
+        var dark = saved === null ? true : JSON.parse(saved);
+        document.documentElement.classList.toggle("dark", dark);
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

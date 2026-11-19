@@ -1,0 +1,39 @@
+# Giorgi Zirakashvili — Senior React Native Developer
+
+> Senior React Native developer and B2B contractor based in Tbilisi, Georgia, working remotely with teams in any timezone. Specializes in high-performance fintech and crypto mobile apps for iOS and Android. Currently available for contract work.
+
+## Hiring summary
+
+- Role: Senior React Native Developer (iOS and Android)
+- Engagement: B2B contractor, remote, any timezone
+- Location: Tbilisi, Georgia
+- Availability: open to new contracts
+- Contact: giorgizirakashvili81@gmail.com
+- Website: https://zirraka.com/
+- LinkedIn: https://www.linkedin.com/in/giorgizirakashvili/
+- GitHub: https://github.com/zirraka
+- CV (PDF): https://zirraka.com/resume.pdf
+
+## Good fit for
+
+- Building or scaling React Native apps in fintech, crypto, payments or Web3
+- Crypto wallets, fiat-to-crypto flows, secure transactions, Apple Pay / Google Pay integration
+- React Native architecture, performance optimization, and state management (Redux, Zustand)
+- Large React Native version upgrades and migrations (e.g. 0.71 → 0.83), including native iOS/Android build issues
+- Mobile CI/CD and release automation (Fastlane, GitHub Actions)
+
+## Experience
+
+- Coinmetro — Senior React Native Developer (Mar 2023 – present): leads mobile development for a crypto trading platform; architecture, onboarding, wallet systems, secure financial transactions.
+- Dawraty Education Group — Senior React Native Developer (Nov 2025 – Dec 2025): led a production React Native upgrade from 0.71 to 0.83.
+- Aiolane — React Native Developer (Sep 2022 – Mar 2023): cross-platform fintech apps with React Native and AWS Amplify.
+- novelty.today — Platform Developer (Dec 2020 – Jun 2022): Web3 mobile platforms with React Native and Ethereum smart contracts, NFT authentication, WalletConnect.
+
+## Skills
+
+React Native, TypeScript, JavaScript, native modules (iOS/Android), Redux, Zustand, REST APIs, Web3, Ethereum, crypto wallet systems, Apple Pay, Google Pay, Node.js, Express, MongoDB, Redis, Fastlane, GitHub Actions, CI/CD.
+
+## Education
+
+- Bachelor of Computer Engineering — San Diego State University
+- Bachelor of Computer Engineering — Tbilisi State University
