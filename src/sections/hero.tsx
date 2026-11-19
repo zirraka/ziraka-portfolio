@@ -1,5 +1,8 @@
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { FiArrowDown, FiArrowUpRight, FiDownload, FiMapPin } from "react-icons/fi";
+import Magnetic from "../components/magnetic";
+import { SOCIALS } from "../data/socials";
 
 const heroPhrases = [
   "Building high-performance fintech apps at scale",
@@ -18,124 +21,240 @@ const heroPhrases = [
   "Building tools for underbanked and global users",
 ];
 
-const Hero = () => {
+const FLOATING_TAGS = [
+  { label: "React Native", className: "-left-16 top-8", delay: 0 },
+  { label: "Fintech", className: "-right-10 top-1/3", delay: 1.2 },
+  { label: "Web3", className: "-left-8 bottom-10", delay: 2.4 },
+];
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const useTypewriter = (phrases: string[]) => {
   const [text, setText] = useState("");
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [speed, setSpeed] = useState(80);
+  const [index, setIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const current = heroPhrases[phraseIndex];
-    const isComplete = !isDeleting && text === current;
-    const isDeleted = isDeleting && text === "";
+    const current = phrases[index];
+    let timer: ReturnType<typeof setTimeout>;
 
-    if (isComplete) {
-      setSpeed(80);
-      setTimeout(() => setIsDeleting(true), 2000);
-    } else if (isDeleted) {
-      setIsDeleting(false);
-      setPhraseIndex((prev) => (prev + 1) % heroPhrases.length);
-      setSpeed(150);
+    if (!deleting && text === current) {
+      timer = setTimeout(() => setDeleting(true), 2000);
+    } else if (deleting && text === "") {
+      timer = setTimeout(() => {
+        setDeleting(false);
+        setIndex((i) => (i + 1) % phrases.length);
+      }, 300);
     } else {
-      const timer = setTimeout(
-        () => {
+      timer = setTimeout(
+        () =>
           setText(
-            isDeleting
+            deleting
               ? current.substring(0, text.length - 1)
               : current.substring(0, text.length + 1),
-          );
-        },
-        isDeleting ? 50 : speed,
+          ),
+        deleting ? 30 : 60,
       );
-
-      return () => clearTimeout(timer);
     }
-  }, [text, isDeleting, phraseIndex, speed]);
+    return () => clearTimeout(timer);
+  }, [text, deleting, index, phrases]);
+
+  return text;
+};
+
+const Hero = () => {
+  const ref = useRef<HTMLElement>(null);
+  const text = useTypewriter(heroPhrases);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const avatarY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
+  const nameWords = ["Giorgi", "Zirakashvili"];
 
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center px-6 py-20
-      bg-gradient-to-br bg-gray-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-700"
+      ref={ref}
+      className="relative flex min-h-svh items-center px-5 pb-20 pt-28 sm:px-8"
     >
-      <div className="container mx-auto max-w-screen-xl">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12">
-          <img
-            src="/avatar.jpeg"
-            width="250"
-            height="250"
-            className="w-64 h-64 rounded-full object-cover
-             shadow-lg dark:shadow-xl
-             border-4 border-white dark:border-gray-800"
-            alt="avatar"
-          />
-          <div className="w-full text-center lg:text-left max-w-2xl">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-800 dark:text-white mb-2 leading-tight">
-              Giorgi Zirakashvili
-            </h1>
-
-            <p className="text-2xl md:text-3xl text-blue-600 dark:text-blue-400 font-medium mb-4">
+      <motion.div
+        style={{ opacity: fade }}
+        className="mx-auto flex w-full max-w-6xl flex-col-reverse items-center gap-12
+                   lg:flex-row lg:items-center lg:justify-between lg:gap-16"
+      >
+        {/* Text */}
+        <motion.div style={{ y: contentY }} className="w-full max-w-2xl text-center lg:text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease }}
+            className="mb-6 flex flex-wrap justify-center gap-2 lg:justify-start"
+          >
+            <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs text-muted sm:text-sm">
+              <span className="bg-gradient size-2 rounded-full" />
               Senior React Native Developer
-            </p>
-            <p
-              className="text-lg md:text-xl font-mono text-gray-700 dark:text-gray-300 mb-8 tracking-wide
-              min-h-[2.5rem] max-w-xl mx-auto lg:mx-0 break-words"
-              style={{
-                fontFamily:
-                  'Monaco, Menlo, "Ubuntu Mono", "Fira Code", monospace',
-              }}
+            </span>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10
+                         px-4 py-1.5 text-xs font-medium text-emerald-600 transition-colors hover:bg-emerald-500/15
+                         dark:text-emerald-300 sm:text-sm"
             >
-              {text}
-              <span className="inline-block w-px h-6 bg-blue-600 dark:bg-blue-400 animate-pulse ml-1" />
-            </p>
-            <div className="w-full flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+              </span>
+              Available for contracts
+            </a>
+          </motion.div>
+
+          <h1 className="font-display text-[clamp(2.75rem,10vw,5.75rem)] font-semibold leading-[0.95] tracking-tight text-fg">
+            {nameWords.map((word, i) => (
+              <span key={word} className="inline-block overflow-hidden pb-2 align-bottom">
+                <motion.span
+                  className={`inline-block ${i === 1 ? "text-gradient" : ""}`}
+                  initial={{ y: "110%" }}
+                  animate={{ y: "0%" }}
+                  transition={{ duration: 0.9, delay: 0.15 + i * 0.12, ease }}
+                >
+                  {word}
+                </motion.span>
+                {i === 0 && <span>&nbsp;</span>}
+              </span>
+            ))}
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="mx-auto mt-6 min-h-[3.5rem] max-w-xl font-mono text-sm leading-relaxed text-muted
+                       sm:min-h-[2rem] sm:text-base lg:mx-0"
+          >
+            <span className="text-accent">&gt; </span>
+            {text}
+            <span className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[3px] animate-pulse bg-accent" />
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75, duration: 0.6, ease }}
+            className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start"
+          >
+            <Magnetic>
               <a
                 href="/resume.pdf"
                 download="Giorgi-Zirakashvili-Resume.pdf"
-                className="w-full sm:w-auto sm:min-w-[180px] h-12 flex items-center justify-center px-6
-                bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white
-                rounded-lg shadow-md hover:shadow-lg transition-all duration-300 font-medium"
+                className="bg-gradient flex h-12 w-full items-center justify-center gap-2 rounded-full px-7
+                           font-medium text-white shadow-lg shadow-indigo-500/25 transition-shadow
+                           hover:shadow-xl hover:shadow-indigo-500/40 sm:w-auto"
               >
-                📄 Download CV
+                <FiDownload /> Download CV
               </a>
+            </Magnetic>
+            <Magnetic>
               <a
                 href="#contact"
-                className="w-full sm:w-auto sm:min-w-[180px] h-12 flex items-center justify-center px-6
-                bg-transparent border-2 border-blue-600 dark:border-blue-400
-                text-blue-600 dark:text-blue-400
-                hover:bg-blue-600 hover:text-white dark:hover:bg-blue-800
-                rounded-lg shadow-md hover:shadow-lg transition-all duration-300 font-medium"
+                className="glass flex h-12 w-full items-center justify-center gap-2 rounded-full px-7
+                           font-medium text-fg transition-colors hover:border-line-strong sm:w-auto"
               >
-                ✉️ Contact me
+                Get in touch <FiArrowUpRight />
               </a>
-            </div>
-            <div className="flex justify-center lg:justify-start gap-6 text-2xl">
+            </Magnetic>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.95, duration: 0.6 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
+          >
+            {SOCIALS.map(({ href, label, icon: Icon }) => (
               <a
-                href="https://github.com/zirraka"
-                target="_blank"
+                key={label}
+                href={href}
+                aria-label={label}
+                target={href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-transform hover:scale-110"
+                className="glass grid size-11 place-items-center rounded-full text-lg text-muted
+                           transition-all hover:-translate-y-0.5 hover:text-fg"
               >
-                <FaGithub />
+                <Icon />
               </a>
-              <a
-                href="https://www.linkedin.com/in/giorgizirakashvili/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-transform hover:scale-110"
-              >
-                <FaLinkedin />
-              </a>
-              <a
-                href="mailto:giorgizirakashvili81@gmail.com"
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-transform hover:scale-110"
-              >
-                <FaEnvelope />
-              </a>
-            </div>
+            ))}
+            <p className="flex w-full items-center justify-center gap-2 text-sm text-muted sm:ml-2 sm:w-auto lg:justify-start">
+              <FiMapPin className="text-accent" />
+              Tbilisi, Georgia · Remote, any timezone
+            </p>
+          </motion.div>
+        </motion.div>
+
+        {/* Avatar */}
+        <motion.div
+          style={{ y: avatarY }}
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.1, ease }}
+          className="relative shrink-0"
+        >
+          <div className="relative size-40 sm:size-56 lg:size-80">
+            <div
+              aria-hidden
+              className="absolute -inset-[3px] rounded-full opacity-90"
+              style={{
+                background: "conic-gradient(from 0deg, #818cf8, #22d3ee, #e879f9, #818cf8)",
+                animation: "spin-slow 8s linear infinite",
+              }}
+            />
+            <div
+              aria-hidden
+              className="absolute -inset-10 -z-10 rounded-full opacity-60 blur-3xl"
+              style={{ background: "radial-gradient(closest-side, var(--glow-1), transparent)" }}
+            />
+            <img
+              src="/avatar.jpeg"
+              width={320}
+              height={320}
+              alt="Giorgi Zirakashvili, Senior React Native Developer"
+              fetchPriority="high"
+              className="relative size-full rounded-full border-4 border-bg object-cover"
+            />
           </div>
-        </div>
-      </div>
+
+          {FLOATING_TAGS.map((tag) => (
+            <motion.span
+              key={tag.label}
+              className={`absolute z-10 hidden rounded-full border border-line bg-surface-strong px-4 py-2 text-sm font-medium text-fg shadow-lg backdrop-blur-md lg:block ${tag.className}`}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
+              transition={{
+                opacity: { delay: 1 + tag.delay * 0.2, duration: 0.5 },
+                scale: { delay: 1 + tag.delay * 0.2, duration: 0.5 },
+                y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: tag.delay },
+              }}
+            >
+              {tag.label}
+            </motion.span>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      <motion.a
+        href="#about"
+        aria-label="Scroll to About"
+        style={{ opacity: fade }}
+        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs text-muted sm:flex"
+      >
+        <span className="font-mono uppercase tracking-[0.2em]">Scroll</span>
+        <motion.span
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <FiArrowDown />
+        </motion.span>
+      </motion.a>
     </section>
   );
 };

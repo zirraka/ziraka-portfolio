@@ -1,4 +1,8 @@
+import { motion, useScroll, useSpring } from "framer-motion";
+import { useRef } from "react";
 import FadeInSection from "../components/fadeInSection";
+import SectionHeading from "../components/sectionHeading";
+import SpotlightCard from "../components/spotlightCard";
 
 const EXPERIENCE_DATA = [
   {
@@ -36,50 +40,66 @@ const EXPERIENCE_DATA = [
 ];
 
 const Experience = () => {
+  const listRef = useRef<HTMLOListElement>(null);
+  // The timeline line "draws" itself as you scroll through the section.
+  const { scrollYProgress } = useScroll({
+    target: listRef,
+    offset: ["start 75%", "end 60%"],
+  });
+  const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
   return (
-    <section id="experience" className="py-16 px-6 bg-gray-50 dark:bg-gray-900">
-      <div className="container mx-auto max-w-4xl">
-        <FadeInSection>
-          <h2 className="text-3xl font-bold mb-12 text-center text-gray-800 dark:text-white">
-            Experience
-          </h2>
-        </FadeInSection>
-        <div className="relative">
-          <div className="hidden md:block absolute left-1/2 top-0 h-full w-0.5 bg-blue-200 dark:bg-blue-900 -translate-x-1/2"></div>
-          {EXPERIENCE_DATA.map((exp, i) => (
-            <FadeInSection key={exp.id} delay={i * 0.1}>
-              <div
-                className={`relative flex flex-col md:flex-row ${
-                  i % 2 === 0 ? "md:flex-row-reverse" : ""
-                } mb-10`}
-              >
-                <div
-                  className={`w-full md:w-1/2 ${
-                    i % 2 === 0 ? "md:pl-8 md:pr-16" : "md:pr-8 md:pl-16"
-                  }`}
+    <section id="experience" className="px-5 py-24 sm:px-8 sm:py-32">
+      <div className="mx-auto max-w-4xl">
+        <SectionHeading eyebrow="Experience" title="Where I’ve shipped." />
+
+        <ol ref={listRef} className="relative space-y-6 pl-8 sm:pl-12">
+          <span aria-hidden className="absolute bottom-2 left-[7px] top-2 w-px bg-line sm:left-[11px]" />
+          <motion.span
+            aria-hidden
+            style={{ scaleY }}
+            className="bg-gradient absolute bottom-2 left-[7px] top-2 w-px origin-top sm:left-[11px]"
+          />
+
+          {EXPERIENCE_DATA.map((exp, i) => {
+            const current = exp.period.includes("Present");
+            return (
+              <li key={exp.id} className="relative">
+                <span
+                  aria-hidden
+                  className="absolute -left-8 top-8 grid size-[15px] place-items-center sm:-left-12 sm:size-[23px]"
                 >
-                  <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition border border-gray-200 dark:border-gray-600">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-                      {exp.role}
-                    </h3>
-                    <p className="text-blue-600 dark:text-blue-400 font-medium">
-                      {exp.company}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                      {exp.period}
-                    </p>
-                    <p className="mt-3 text-gray-700 dark:text-gray-300">
+                  <span className="bg-gradient size-full rounded-full p-[3px]">
+                    <span className="block size-full rounded-full bg-bg" />
+                  </span>
+                  {current && (
+                    <span className="bg-gradient absolute inset-0 animate-ping rounded-full opacity-40" />
+                  )}
+                </span>
+
+                <FadeInSection delay={i * 0.05}>
+                  <SpotlightCard>
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+                      <div>
+                        <h3 className="font-display text-lg font-semibold text-fg sm:text-xl">
+                          {exp.role}
+                        </h3>
+                        <p className="text-gradient font-medium">{exp.company}</p>
+                      </div>
+                      <span className="mt-1 inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-line px-3 py-1 font-mono text-xs text-muted">
+                        {current && <span className="size-1.5 rounded-full bg-emerald-400" />}
+                        {exp.period}
+                      </span>
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">
                       {exp.description}
                     </p>
-                  </div>
-                </div>
-                <div className="hidden md:block absolute left-1/2 top-8 -translate-x-1/2">
-                  <div className="w-5 h-5 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900 shadow-md"></div>
-                </div>
-              </div>
-            </FadeInSection>
-          ))}
-        </div>
+                  </SpotlightCard>
+                </FadeInSection>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

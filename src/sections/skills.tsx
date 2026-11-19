@@ -1,68 +1,104 @@
-import FadeInSection from "../components/fadeInSection";
-import {
-  SiMongodb,
-  SiTypescript,
-  SiCplusplus,
-  SiJavascript,
-  SiDocker,
-  SiGithub,
-  SiExpress,
-} from "react-icons/si";
-import { FaReact, FaNodeJs } from "react-icons/fa";
 import { DiRedis } from "react-icons/di";
+import { FaApple, FaGooglePay, FaNodeJs, FaReact } from "react-icons/fa";
+import {
+  FiCpu,
+  FiDatabase,
+  FiGitBranch,
+  FiLayers,
+  FiServer,
+  FiShield,
+  FiSmartphone,
+  FiZap,
+} from "react-icons/fi";
+import {
+  SiEthereum,
+  SiExpress,
+  SiFastlane,
+  SiGithub,
+  SiGithubactions,
+  SiJavascript,
+  SiMongodb,
+  SiRedux,
+  SiTypescript,
+  SiWeb3Dotjs,
+} from "react-icons/si";
+import type { IconType } from "react-icons";
+import FadeInSection from "../components/fadeInSection";
+import SectionHeading from "../components/sectionHeading";
+import SpotlightCard from "../components/spotlightCard";
 
-const SKILLS_DATA = [
+type Skill = { name: string; icon: IconType };
+
+const SKILLS_DATA: {
+  id: string;
+  name: string;
+  icon: IconType;
+  span: string;
+  items: Skill[];
+}[] = [
   {
     id: "mobile",
     name: "Mobile Development",
+    icon: FiSmartphone,
+    span: "md:col-span-2",
     items: [
       { name: "React Native", icon: FaReact },
       { name: "TypeScript", icon: SiTypescript },
       { name: "JavaScript", icon: SiJavascript },
-      { name: "Native Modules (iOS / Android)", icon: SiCplusplus },
+      { name: "Native Modules (iOS / Android)", icon: FiCpu },
     ],
   },
   {
     id: "architecture",
     name: "Architecture & State",
+    icon: FiLayers,
+    span: "",
     items: [
-      { name: "Redux", icon: FaReact },
+      { name: "Redux", icon: SiRedux },
       { name: "Zustand", icon: FaReact },
       { name: "REST APIs", icon: FaNodeJs },
-      { name: "Scalable App Architecture", icon: FaReact },
+      { name: "Scalable App Architecture", icon: FiLayers },
     ],
   },
   {
     id: "fintech",
     name: "Fintech & Blockchain",
+    icon: FiShield,
+    span: "",
     items: [
-      { name: "Crypto Wallet Systems", icon: FaReact },
-      { name: "Web3 / Ethereum", icon: FaReact },
-      { name: "Secure Transactions", icon: FaReact },
-      { name: "Payment Integrations (Apple Pay / Google Pay)", icon: FaReact },
-    ],
-  },
-  {
-    id: "backend",
-    name: "Backend & APIs",
-    items: [
-      { name: "Node.js", icon: FaNodeJs },
-      { name: "Express", icon: SiExpress },
-      { name: "REST API Design", icon: FaNodeJs },
+      { name: "Crypto Wallet Systems", icon: FiShield },
+      { name: "Web3 / Ethereum", icon: SiEthereum },
+      { name: "Secure Transactions", icon: FiShield },
+      { name: "Payment Integrations (Apple Pay / Google Pay)", icon: FaApple },
     ],
   },
   {
     id: "devops",
     name: "DevOps & Tooling",
+    icon: FiGitBranch,
+    span: "md:col-span-2",
     items: [
-      { name: "CI/CD (Fastlane)", icon: SiDocker },
+      { name: "CI/CD (Fastlane)", icon: SiFastlane },
       { name: "Git / GitHub", icon: SiGithub },
-      { name: "Build & Release Pipelines", icon: SiDocker },
+      { name: "Build & Release Pipelines", icon: SiGithubactions },
+    ],
+  },
+  {
+    id: "backend",
+    name: "Backend & APIs",
+    icon: FiServer,
+    span: "",
+    items: [
+      { name: "Node.js", icon: FaNodeJs },
+      { name: "Express", icon: SiExpress },
+      { name: "REST API Design", icon: FiZap },
     ],
   },
   {
     id: "databases",
     name: "Databases",
+    icon: FiDatabase,
+    span: "md:col-span-2",
     items: [
       { name: "MongoDB", icon: SiMongodb },
       { name: "Redis", icon: DiRedis },
@@ -70,63 +106,84 @@ const SKILLS_DATA = [
   },
 ];
 
-const Skills = () => {
-  return (
-    <section
-      id="skills"
-      className="min-h-screen flex items-center py-20 px-6
-              bg-gray-50 dark:bg-gray-900
-              transition-colors duration-300"
-    >
-      <div className="container mx-auto max-w-5xl">
-        <FadeInSection>
-          <h2 className="text-3xl font-bold mb-4 text-center text-gray-800 dark:text-white">
-            Technical Skills
-          </h2>
-        </FadeInSection>
+const MARQUEE: Skill[] = [
+  { name: "React Native", icon: FaReact },
+  { name: "TypeScript", icon: SiTypescript },
+  { name: "Redux", icon: SiRedux },
+  { name: "Ethereum", icon: SiEthereum },
+  { name: "Web3", icon: SiWeb3Dotjs },
+  { name: "Fastlane", icon: SiFastlane },
+  { name: "GitHub Actions", icon: SiGithubactions },
+  { name: "Node.js", icon: FaNodeJs },
+  { name: "MongoDB", icon: SiMongodb },
+  { name: "Redis", icon: DiRedis },
+  { name: "Apple Pay", icon: FaApple },
+  { name: "Google Pay", icon: FaGooglePay },
+];
 
-        <FadeInSection delay={0.2}>
-          <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-12">
-            I specialize in building high-performance mobile applications where
-            scalability, user experience, and long-term maintainability are
-            critical.
-          </p>
-        </FadeInSection>
+const Marquee = () => (
+  <div
+    className="relative mb-10 overflow-hidden py-2"
+    style={{
+      maskImage: "linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)",
+      WebkitMaskImage: "linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)",
+    }}
+  >
+    <div className="flex w-max gap-3" style={{ animation: "marquee 40s linear infinite" }}>
+      {[...MARQUEE, ...MARQUEE].map(({ name, icon: Icon }, i) => (
+        <span
+          key={i}
+          aria-hidden={i >= MARQUEE.length}
+          className="glass flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm text-fg"
+        >
+          <Icon className="text-accent" /> {name}
+        </span>
+      ))}
+    </div>
+  </div>
+);
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SKILLS_DATA.map((cat, i) => {
-            return (
-              <FadeInSection key={i} delay={i * 0.1}>
-                <div
-                  className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600
-                               rounded-xl p-6 shadow-sm hover:shadow-lg hover:transform hover:-translate-y-1
-                               transition-all duration-300"
-                >
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2 min-h-6">
-                    {cat.name}
-                  </h3>
-                  <ul className="space-y-3">
-                    {cat.items.map((item, idx) => {
-                      const ItemIcon = item.icon;
-                      return (
-                        <li
-                          key={idx}
-                          className="flex items-center min-h-7 text-gray-700 dark:text-gray-300 text-sm"
-                        >
-                          <ItemIcon className="text-blue-500 dark:text-blue-400 w-5 h-5 mr-3 opacity-80" />
-                          {item.name}
-                        </li>
-                      );
-                    })}
-                  </ul>
+const Skills = () => (
+  <section id="skills" className="px-5 py-24 sm:px-8 sm:py-32">
+    <div className="mx-auto max-w-6xl">
+      <SectionHeading
+        eyebrow="Skills"
+        title="The toolkit."
+        subtitle="I specialize in building high-performance mobile applications where scalability, user experience, and long-term maintainability are critical."
+      />
+
+      <FadeInSection>
+        <Marquee />
+      </FadeInSection>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        {SKILLS_DATA.map((cat, i) => {
+          const CatIcon = cat.icon;
+          return (
+            <FadeInSection key={cat.id} delay={i * 0.06} className={cat.span}>
+              <SpotlightCard>
+                <div className="mb-5 flex items-center justify-between">
+                  <h3 className="font-display text-lg font-semibold text-fg">{cat.name}</h3>
+                  <CatIcon className="text-xl text-muted transition-colors group-hover:text-accent" />
                 </div>
-              </FadeInSection>
-            );
-          })}
-        </div>
+                <ul className="flex flex-wrap gap-2">
+                  {cat.items.map(({ name, icon: Icon }) => (
+                    <li
+                      key={name}
+                      className="flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-fg"
+                    >
+                      <Icon className="shrink-0 text-accent" />
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              </SpotlightCard>
+            </FadeInSection>
+          );
+        })}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Skills;

@@ -1,4 +1,7 @@
+import { FiBookOpen } from "react-icons/fi";
 import FadeInSection from "../components/fadeInSection";
+import SectionHeading from "../components/sectionHeading";
+import SpotlightCard from "../components/spotlightCard";
 
 const EDUCATION_DATA = [
   {
@@ -15,52 +18,35 @@ const EDUCATION_DATA = [
   },
 ];
 
-const Education = () => {
-  return (
-    <section
-      id="education"
-      className="py-16 px-6 bg-white dark:bg-gray-800 transition-colors duration-300"
-    >
-      <div className="container mx-auto max-w-4xl">
-        <h2 className="text-3xl font-bold mb-12 text-center text-gray-800 dark:text-white">
-          Education
-        </h2>
-        <div className="relative">
-          <div className="hidden md:block absolute left-1/2 top-0 h-full w-0.5 bg-indigo-200 dark:bg-indigo-900 -translate-x-1/2"></div>
-          {EDUCATION_DATA.map((edu, i) => (
-            <FadeInSection key={edu.id} delay={i * 0.1}>
-              <div
-                className={`relative flex flex-col md:flex-row ${
-                  i % 2 === 0 ? "md:flex-row-reverse" : ""
-                } mb-10`}
-              >
-                <div
-                  className={`w-full md:w-1/2 ${
-                    i % 2 === 0 ? "md:pl-8 md:pr-16" : "md:pr-8 md:pl-16"
-                  }`}
-                >
-                  <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-600">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-                      {edu.degree}
-                    </h3>
-                    <p className="text-blue-600 dark:text-blue-400 font-medium">
-                      {edu.school}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                      {edu.year}
-                    </p>
-                  </div>
-                </div>
-                <div className="hidden md:block absolute left-1/2 top-8 -translate-x-1/2">
-                  <div className="w-5 h-5 bg-indigo-600 rounded-full border-4 border-white dark:border-gray-900 shadow-md"></div>
+const Education = () => (
+  <section id="education" className="px-5 py-24 sm:px-8 sm:py-32">
+    <div className="mx-auto max-w-6xl">
+      <SectionHeading eyebrow="Education" title="Foundations." />
+
+      <div className="grid gap-4 md:grid-cols-2">
+        {EDUCATION_DATA.map((edu, i) => (
+          <FadeInSection key={edu.id} delay={i * 0.08}>
+            <SpotlightCard>
+              <div className="flex items-start gap-5">
+                <span className="grid size-12 shrink-0 place-items-center rounded-2xl border border-line bg-surface text-xl text-accent">
+                  <FiBookOpen />
+                </span>
+                <div>
+                  <h3 className="font-display text-lg font-semibold text-fg sm:text-xl">
+                    {edu.school}
+                  </h3>
+                  <p className="mt-1 text-muted">{edu.degree}</p>
+                  <p className="mt-3 font-mono text-xs uppercase tracking-widest text-muted">
+                    {edu.year}
+                  </p>
                 </div>
               </div>
-            </FadeInSection>
-          ))}
-        </div>
+            </SpotlightCard>
+          </FadeInSection>
+        ))}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Education;

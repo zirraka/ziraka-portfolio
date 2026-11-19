@@ -1,36 +1,161 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Base styles */
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #f4f5fa;
+  --fg: #0b0c14;
+  --muted: #565b70;
+  --surface: rgb(255 255 255 / 0.62);
+  --surface-strong: rgb(255 255 255 / 0.92);
+  --line: rgb(15 23 42 / 0.09);
+  --line-strong: rgb(15 23 42 / 0.16);
+  --accent: #4f46e5;
+  --grad: linear-gradient(100deg, #4f46e5 0%, #0891b2 45%, #c026d3 100%);
+  --glow-1: rgb(99 102 241 / 0.30);
+  --glow-2: rgb(34 211 238 / 0.26);
+  --glow-3: rgb(217 70 239 / 0.18);
+  --spot: rgb(99 102 241 / 0.10);
+  --grid: rgb(15 23 42 / 0.05);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #05060b;
+  --fg: #f3f4fa;
+  --muted: #9097ad;
+  --surface: rgb(255 255 255 / 0.035);
+  --surface-strong: rgb(14 15 24 / 0.88);
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.16);
+  --accent: #818cf8;
+  --grad: linear-gradient(100deg, #818cf8 0%, #22d3ee 45%, #e879f9 100%);
+  --glow-1: rgb(99 102 241 / 0.42);
+  --glow-2: rgb(34 211 238 / 0.24);
+  --glow-3: rgb(217 70 239 / 0.26);
+  --spot: rgb(129 140 248 / 0.16);
+  --grid: rgb(255 255 255 / 0.035);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
+/* ---------- Base ---------- */
 @layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
-    @apply bg-gray-50 dark:bg-gray-900 transition-colors;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 
-  h1 {
-    @apply text-2xl font-bold;
+  section[id] {
+    scroll-margin-top: 88px;
   }
 
-  p {
-    @apply text-gray-700 dark:text-gray-300;
+  ::selection {
+    background: rgb(129 140 248 / 0.35);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 8px;
   }
 }
 
-/* Components */
-@layer components {
-  .btn-primary {
-    @apply px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow transition;
-  }
-
-  .app-container {
-    @apply w-full max-w-6xl mx-auto px-4;
+/* ---------- Utilities ---------- */
+@utility glass {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  /* Blur is expensive on phones; only enable it on larger screens */
+  @media (min-width: 768px) {
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
   }
 }
 
-/* Utilities */
-@layer utilities {
-  .shadow-lg-hover {
-    @apply hover:shadow-lg;
+@utility text-gradient {
+  background-image: var(--grad);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 8s linear infinite;
+}
+
+@utility bg-gradient {
+  background-image: var(--grad);
+  background-size: 200% auto;
+  animation: gradient-pan 8s linear infinite;
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes gradient-pan {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes aurora-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(12vw, 8vh, 0) scale(1.15); }
+}
+
+@keyframes aurora-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.1); }
+  50% { transform: translate3d(-14vw, 10vh, 0) scale(0.9); }
+}
+
+@keyframes aurora-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.95); }
+  50% { transform: translate3d(6vw, -12vh, 0) scale(1.2); }
+}
+
+@keyframes marquee {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

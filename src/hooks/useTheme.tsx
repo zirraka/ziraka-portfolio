@@ -1,35 +1,30 @@
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
+
+// One shared theme store, so every toggle on the page stays in sync.
+const listeners = new Set<() => void>();
+
+const isDark = () => document.documentElement.classList.contains("dark");
+
+const subscribe = (cb: () => void) => {
+  listeners.add(cb);
+  return () => listeners.delete(cb);
+};
+
+const setDark = (next: boolean) => {
+  document.documentElement.classList.toggle("dark", next);
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute("content", next ? "#05060b" : "#f4f5fa");
+  try {
+    localStorage.setItem("darkMode", JSON.stringify(next));
+  } catch {
+    /* storage unavailable — theme still applies for this visit */
+  }
+  listeners.forEach((l) => l());
+};
 
 export const useTheme = () => {
-  const [darkMode, setDarkMode] = useState(true);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("darkMode");
-
-    const initial = saved ? JSON.parse(saved) : true;
-
-    setDarkMode(initial);
-
-    if (initial) {
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => {
-      const next = !prev;
-
-      localStorage.setItem("darkMode", JSON.stringify(next));
-
-      if (next) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-
-      return next;
-    });
-  };
-
+  const darkMode = useSyncExternalStore(subscribe, isDark, () => true);
+  const toggleDarkMode = () => setDark(!isDark());
   return { darkMode, toggleDarkMode };
 };

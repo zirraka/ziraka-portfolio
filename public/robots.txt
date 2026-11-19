@@ -1,0 +1,6 @@
+# Everyone is welcome — search engines and AI assistants alike
+# (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, etc.)
+User-agent: *
+Allow: /
+
+Sitemap: https://zirraka.com/sitemap.xml
